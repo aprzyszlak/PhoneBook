@@ -10,12 +10,11 @@ namespace PhoneBook
 {
     class ListDatabase
     {
-        static List<Contact> list = new List<Contact>();
+        public static List<Contact> list { get; set; } = new List<Contact>();
 
-        static public List<Contact> AddContact(Contact contact)
+        static public void AddContact(Contact contact)
         {
             list.Add(contact);
-            return list;
         }
 
         static public void ShowAll()
@@ -26,24 +25,20 @@ namespace PhoneBook
             }
         }
 
+        static private void DisplayContact(Contact contact)
+        {
+            Console.WriteLine($"Name: {contact.Name}, Number: {contact.Number}");
+        }
         static public void GetContactPerNumber(int number)
         {
-            List<Contact> nowa = new List<Contact>();
-            nowa = list.Where(e => e.Number == number).ToList();
-            foreach (var item in nowa)
-            {
-                Console.WriteLine($"Name: {item.Name}, Number: {item.Number}");
-            }
+            var contact = list.FirstOrDefault(e => e.Number == number);
+            DisplayContact(contact);
         }
 
         static public void GetContactPerName(string name)
         {
-            List<Contact> nowa = new List<Contact>();
-            nowa = list.Where(e => e.Name == name).ToList();
-            foreach (var item in nowa)
-            {
-                Console.WriteLine($"Name: {item.Name}, Number: {item.Number}");
-            }
+            var contact = list.FirstOrDefault(x => x.Name == name);
+            DisplayContact(contact);
         }
 
         static public void DeleteContact(string name)
